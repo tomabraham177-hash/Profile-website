@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammed Sahal KM - Dynamic Profile</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    
+    :root {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --primary-accent: #00FFFF; /* Cyan */
+      --secondary-accent: #FF007F; /* Magenta */
+      --card-bg: #1e1e1e;
+      --border-color: #333333;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://svs.gsfc.nasa.gov/vis/a010000/a014100/a014146/BH_accretion_disk_viz_mobile.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Keyframe animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(0, 255, 255, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0); }
+    }
+
+    @keyframes rotateGlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .section-container {
+      padding: 80px 20px;
+      max-width: 1000px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+
+    .section-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    header {
+      padding: 100px 20px 80px;
+      text-align: center;
+      position: relative;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+      opacity: 0.1;
+      animation: rotateGlow 30s linear infinite;
+      clip-path: circle(20% at 80% 20%);
+    }
+    
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(-45deg, var(--primary-accent), var(--secondary-accent));
+      opacity: 0.1;
+      animation: rotateGlow 30s linear infinite reverse;
+      clip-path: circle(15% at 20% 80%);
+    }
+
+    .profile-img-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .profile-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 4px solid var(--primary-accent);
+      object-fit: cover;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .profile-img-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--primary-accent);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(1.1);
+      animation: pulse 2s infinite cubic-bezier(0.66, 0.0, 0.34, 1);
+    }
+
+    header h1 {
+      margin-top: 25px;
+      font-size: 3.5em;
+      font-weight: 700;
+      color: var(--text-color);
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+
+    .subtitle {
+      font-size: 1.2em;
+      color: var(--primary-accent);
+      font-weight: 300;
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-size: 2.5em;
+      font-weight: 600;
+      color: var(--secondary-accent);
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .content-card {
+      background-color: var(--card-bg);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .content-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--primary-accent), var(--secondary-accent));
+      opacity: 0.1;
+      border-radius: 15px;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .content-card:hover::before {
+      opacity: 0.2;
+    }
+
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .skill-tag {
+      background-color: var(--border-color);
+      color: var(--primary-accent);
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .skill-tag:hover {
+      background-color: var(--primary-accent);
+      color: var(--bg-color);
+      transform: translateY(-5px);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .project-card {
+      background-color: var(--card-bg);
+      padding: 30px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+    }
+
+    .project-card h3 {
+      font-size: 1.5em;
+      color: var(--primary-accent);
+      margin-top: 0;
+    }
+
+    .project-card p {
+      color: var(--text-color);
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    footer a {
+      color: var(--primary-accent);
+      margin: 0 15px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: var(--secondary-accent);
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.5em; }
+      .section-container { padding: 60px 15px; }
+      h2 { font-size: 2em; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="profile-img-wrapper">
+      <img src="https://via.placeholder.com/160/00FFFF/121212?text=MS" alt="Profile Picture" class="profile-img" />
+    </div>
+    <h1>Muhammed Sahal KM</h1>
+    <p class="subtitle">Computer Science Student</p>
+  </header>
+
+  <section id="about" class="section-container">
+    <div class="content-card">
+      <h2>About Me</h2>
+      <p>Hello! I am Muhammed Sahal KM, a 17-year-old Computer Science student. I am deeply passionate about science and technology. My ambition is to explore the vast world of science, understand its mysteries, and contribute to discoveries that can inspire and help people.</p>
+    </div>
+  </section>
+
+  <section id="skills" class="section-container">
+    <h2>Skills</h2>
+    <div class="content-card skills-grid">
+      <span class="skill-tag">Computer Science</span>
+      <span class="skill-tag">Problem Solving</span>
+      <span class="skill-tag">Web Development</span>
+      <span class="skill-tag">Scientific Curiosity</span>
+      <span class="skill-tag">HTML5</span>
+      <span class="skill-tag">CSS3</span>
+      <span class="skill-tag">JavaScript</span>
+    </div>
+  </section>
+
+  <section id="projects" class="section-container">
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3>Personal Website</h3>
+        <p>This very site is one of my first steps in building my online presence as a science and tech enthusiast.</p>
+      </div>
+      <div class="project-card">
+        <h3>Learning Journey</h3>
+        <p>Currently building skills in coding, problem-solving, and exploring science topics to prepare for future research and innovation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section-container">
+    <div class="content-card">
+      <h2>Contact</h2>
+      <p>Feel free to reach out to me!</p>
+      <p>Email: <a href="mailto:yourname@example.com" class="text-primary-accent hover:text-secondary-accent transition-colors">yourname@example.com</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Muhammed Sahal KM</p>
+    <a href="#about">About</a> |
+    <a href="#skills">Skills</a> |
+    <a href="#projects">Projects</a> |
+    <a href="#contact">Contact</a>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Intersection Observer for fade-in effect on sections
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, {
+        threshold: 0.2 // Trigger when 20% of the element is visible
+      });
+
+      document.querySelectorAll('.section-container').forEach(section => {
+        observer.observe(section);
+      });
+    });
+  </script>
+</body>
+</html>
